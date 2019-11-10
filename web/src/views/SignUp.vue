@@ -32,9 +32,6 @@ export default {
         return
       }
       return this.signUp({ username: this.user.username, password: this.user.password })
-        .then(() => {
-          this.$router.push({ name: 'home' })
-        })
     }
   }
 }

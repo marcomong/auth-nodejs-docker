@@ -1,28 +1,14 @@
 import axios from 'axios'
 
-function login (payload, callback) {
-  axios.post('/login', payload)
-    .then((res) => {
-      return callback(null, res.data)
-    })
-    .catch((err) => {
-      return callback(err)
-    })
+function logIn (payload, callback) {
+  return axios.post('/logIn', payload)
 }
 
-function signUp (payload, callback) {
-  console.log(payload)
-  axios.post('/signUp', payload)
-    .then((res) => {
-      debugger
-      return callback(null, res.data)
-    })
-    .catch((err) => {
-      return callback(err)
-    })
+function signUp (payload) {
+  return axios.post('/signUp', payload)
 }
 
 export default {
-  login,
+  logIn,
   signUp
 }

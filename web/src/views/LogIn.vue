@@ -22,13 +22,10 @@ export default {
   },
   methods: {
     ...mapActions([
-      'login'
+      'logIn'
     ]),
     perfromLogIn () {
-      return this.login({ username: this.user.username, password: this.user.password })
-        .then(() => {
-          this.$router.push({ name: 'home' })
-        })
+      return this.logIn({ username: this.user.username, password: this.user.password })
     }
   }
 }
