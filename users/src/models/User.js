@@ -29,9 +29,11 @@ module.exports.signUp = (username, password) => {
   return new Promise((resolve, reject) => {
     const user = User.find({username})
       .then((user) => {
-        // if (user) {
-        //   reject({error: 'User already exists'})
-        // }
+        if (user) {
+          reject({
+            message: 'User already exists'
+          })
+        }
         const newUser = new User({
           username: username
         })
@@ -57,7 +59,7 @@ module.exports.logIn = (username, password) => {
         if (user.isValidPassword(password)) {
           resolve(user.toJSON())
         } else {
-          reject({ error: 'Password not valid'})
+          reject({ message: 'Password not valid'})
         }
       })
       .catch((err) => {

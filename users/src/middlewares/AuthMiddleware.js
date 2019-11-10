@@ -1,4 +1,5 @@
 const axios = require('axios')
+const Response = require('../models/Response')
 
 var authInstance = axios.create({
   baseURL: 'http://localhost:8082/auth/',
@@ -10,10 +11,10 @@ function generateToken (req, res) {
   authInstance.post('/generateToken', req.user)
     .then((token) => {
       req.user.token = token.data
-      res.status(200).send(req.user)
+      return new Response(res, 200, null, req.user).send()
     })
     .catch((err) => {
-      res.status(500).send(err)
+      return new Response(res, 500, err.message).send()
     })
 }
 
@@ -25,16 +26,10 @@ function isTokenValid (req, res, next) {
       req.body.isTokenValid = result.data.body.isTokenValid
       if(req.data.success)
         next()
-      res.status(500).send({
-        success: false,
-        message: 'Faild while authorizing user token'
-      })
+      return new Response(res, 500, 'Faild while authorizing user token').send()
     })
     .catch((err) => {
-      res.status(err.response.status).send({
-        success: false,
-        message: err.message
-      })
+      return new Response(res, err.response.status, err.message).send()
     })
 }
 

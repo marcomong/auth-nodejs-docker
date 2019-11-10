@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Response = require('../models/Response')
 
 function signUp (req, res, next) {
   const { body } = req
@@ -9,10 +10,7 @@ function signUp (req, res, next) {
       next()
     })
     .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message: err.message
-      })
+      return new Response(res, 500, err.message).send()
     })
 }
 
@@ -25,10 +23,7 @@ function logIn (req, res, next) {
       next()
     })
     .catch((err) => {
-      res.status(500).send({
-        success: false,
-        message: err.message
-      })
+      return new Response(res, 500, err.message).send()
     })
 }
 
