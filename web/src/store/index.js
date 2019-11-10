@@ -9,6 +9,9 @@ export default new Vuex.Store({
   state: {
     user: null
   },
+  getters: {
+    isUserLoggedIn: state => state.user != null
+  },
   mutations: {
     setUserInfo (state, payload) {
       state.user = payload
@@ -32,6 +35,9 @@ export default new Vuex.Store({
         }
         commit('setUserInfo', res)
       })
+    },
+    logout ({ commit }) {
+      commit('setUserInfo', null)
     }
   },
   modules: {

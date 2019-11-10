@@ -2,11 +2,18 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
+require('./configurations/db')
+
+const AuthRoutes = require('./routes/AuthRoutes')
 const config = require('./configurations/config')
 
-let AuthRoutes = require('./routes/AuthRoutes')
 
-let app = express()
+const port = config.app.port
+
+const app = express()
+
+app.set('port', port)
+
 app.use(cors())
 
 app.use(bodyParser.json({
@@ -17,10 +24,8 @@ app.use(bodyParser.urlencoded({
   limit: '10mb'
 }))
 
-app.set('port', config.app.port)
-
 app.use('/auth', AuthRoutes)
 
-app.listen(app.get('port'), function () {
-  console.log(`listening on port ${config.app.port}`)
+app.listen(app.get('port'), () => {
+  console.log(`listening on port ${port}`)
 })

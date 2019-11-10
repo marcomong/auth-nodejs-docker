@@ -3,7 +3,8 @@
     <h1>Insert your credentials</h1>
     <input type="text" name="username" id="username" class="inputForm" placeholder="Username" v-model="user.username">
     <input type="password" name="passowrd" id="password" class="inputForm" placeholder="Password" v-model="user.password">
-    <button class="btn" @click="performLogin()">LOGIN</button>
+    <button class="btn" @click="perfromLogIn()">LOGIN</button>
+    <router-link to="/signUp">sign up</router-link>
   </div>
 </template>
 
@@ -21,11 +22,13 @@ export default {
   },
   methods: {
     ...mapActions([
-      'login',
-      'signUp'
+      'login'
     ]),
-    performLogin () {
+    perfromLogIn () {
       return this.login({ username: this.user.username, password: this.user.password })
+        .then(() => {
+          this.$router.push({ name: 'home' })
+        })
     }
   }
 }

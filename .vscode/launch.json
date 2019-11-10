@@ -9,6 +9,12 @@
       "request": "launch",
       "name": "Auth - Debug",
       "program": "${workspaceFolder}/auth/src/app.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Users - Debug",
+      "program": "${workspaceFolder}/users/src/app.js"
     }
   ]
 }

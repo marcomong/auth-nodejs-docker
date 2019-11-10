@@ -1,31 +1,13 @@
-const User = require('../models/User')
+const Token = require('../models/Token')
 
-function login (req, res) 
-{
+function generateToken (req, res) {
   const { body } = req
-
-  User.login(body.username, body.password)
-    .then((response) => {
-      res.status(200).send(response)
-    })
-    .catch((err) => {
-      res.status(500).send(err)
-    })
+  try {
+    const token = Token.generateToken(body.username, body._id)
+    res.status(200).send(token)
+  } catch (err) {
+    res.status(500).send(err)
+  }
 }
 
-function signUp (req, res) 
-{
-  const { body } = req
-
-  User.signUp(body.username, body.password)
-    .then((response) => {
-      res.status(200).send(response)
-    })
-    .catch((err) => {
-      res.status(500).send(err)
-    })
-}
-
-
-module.exports.login = login
-module.exports.signUp = signUp
+module.exports.generateToken = generateToken
