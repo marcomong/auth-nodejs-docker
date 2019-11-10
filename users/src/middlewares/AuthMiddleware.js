@@ -1,7 +1,13 @@
 const axios = require('axios')
 
+var authInstance = axios.create({
+  baseURL: 'http://localhost:8082/auth/',
+  timeout: 1000,
+  headers: {}
+})
+
 function generateToken (req, res) {
-  axios.post('http://localhost:8082/auth/generateToken', req.user)
+  authInstance.post('/generateToken', req.user)
     .then((token) => {
       req.user.token = token.data
       res.status(200).send(req.user)

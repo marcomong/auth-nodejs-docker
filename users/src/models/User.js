@@ -46,3 +46,22 @@ module.exports.signUp = (username, password) => {
       })
   })
 }
+
+module.exports.logIn = (username, password) => {
+  return new Promise((resolve, reject) => {
+    User.findOne({username})
+      .then((user) => {
+        if (!user) {
+          reject({message: 'User does not exists'})
+        }
+        if (user.isValidPassword(password)) {
+          resolve(user.toJSON())
+        } else {
+          reject({ error: 'Password not valid'})
+        }
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
