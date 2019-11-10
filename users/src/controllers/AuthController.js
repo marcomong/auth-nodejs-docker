@@ -10,7 +10,8 @@ function signUp (req, res, next) {
     })
     .catch((err) => {
       res.status(500).send({
-        error: err.message
+        success: false,
+        message: err.message
       })
     })
 }
@@ -25,7 +26,8 @@ function logIn (req, res, next) {
     })
     .catch((err) => {
       res.status(500).send({
-        error: err.message
+        success: false,
+        message: err.message
       })
     })
 }

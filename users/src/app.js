@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 require('./configurations/db')
 
 const AuthRoutes = require('./routes/AuthRoutes')
+const UserInfoRoutes = require('./routes/UserInfoRoutes')
 const config = require('./configurations/config')
 
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use('/auth', AuthRoutes)
+app.use('/user', UserInfoRoutes)
 
 app.listen(app.get('port'), () => {
   console.log(`listening on port ${port}`)

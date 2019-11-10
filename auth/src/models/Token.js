@@ -8,4 +8,9 @@ function generateToken (username, _id) {
   }, config.jwt.secret)
 }
 
+function isTokenValid (token) {
+  return jwt.verify(token, config.jwt.secret)
+}
+
 module.exports.generateToken = generateToken
+module.exports.isTokenValid = isTokenValid
