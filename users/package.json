@@ -1,0 +1,11 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "microservice user mgn",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "marco mongelli",
+  "license": "ISC"
+}

@@ -1,0 +1,73 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 1.6rem;
+  background-image: linear-gradient(to bottom right, $color-secondary, $color-primary);
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 5rem 5rem;
+  box-shadow: 2rem 2rem 2rem #2c2c2c83;
+  min-height: 60rem;
+  background-color: rgb(219, 219, 219);
+}
+
+.main {
+  display: flex;
+  align-self: stretch;
+  display: flex;
+  flex-grow: 1;
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    text-decoration: none;
+    color: black;
+  }
+  &:active {
+    text-decoration: none;
+    color: black;
+  }
+  &:focus {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.btn {
+  height: 3rem;
+  border: none;
+  width: 100%;
+  background-color: $color-secondary;
+  color: white;
+  font-weight: 400;
+  border-radius: .2rem;
+  outline: none;
+
+  &:hover {
+    background-color: $color-primary;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
