@@ -1,6 +1,7 @@
 <template>
   <div class="auth">
     <h1>Insert your credentials</h1>
+    <div class="error" v-if="error != null">{{error}}</div>
     <input type="text" name="username" id="username" class="inputForm" placeholder="Username" v-model="user.username">
     <input type="password" name="passowrd" id="password" class="inputForm" placeholder="Password" v-model="user.password">
     <input type="password" name="confirmPassword" id="confirmPassword" class="inputForm" placeholder="Confirm password" v-model="user.confirmPassword">
@@ -10,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -20,6 +21,12 @@ export default {
         password: 'test',
         confirmPassword: 'test'
       }
+    }
+  },
+  computed: {
+    ...mapGetters(['getError']),
+    error () {
+      return this.getError
     }
   },
   methods: {

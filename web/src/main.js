@@ -5,7 +5,7 @@ import store from './store'
 
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost/api/auth/'
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'http://localhost/api/auth/' : 'http://localhost:8081/auth/'
 
 Vue.config.productionTip = false
 

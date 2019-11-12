@@ -27,12 +27,13 @@ module.exports = User = mongoose.model('User', UserSchema)
 
 module.exports.signUp = (username, password) => {
   return new Promise((resolve, reject) => {
-    const user = User.find({username})
+    const user = User.findOne({username})
       .then((user) => {
         if (user) {
           reject({
             message: 'User already exists'
           })
+          return
         }
         const newUser = new User({
           username: username
@@ -55,6 +56,7 @@ module.exports.logIn = (username, password) => {
       .then((user) => {
         if (!user) {
           reject({message: 'User does not exists'})
+          return
         }
         if (user.isValidPassword(password)) {
           resolve(user.toJSON())

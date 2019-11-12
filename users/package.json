@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon src/app.js",
+    "debug": "NODE_ENV=test nodemon — inspect=0.0.0.0:9229 src/app.js",
     "test": "test"
   },
   "author": "marco mongelli",
