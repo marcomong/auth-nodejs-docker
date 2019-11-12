@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  web:
+    build: ./web
+    restart: always
+    expose:
+      - 80
+    ports:
+      - '80:80'
+    links:
+      - users
+      - auth
+  users:
+    build: ./users
+    expose:
+      - 8081
+    ports:
+      - '8081:8081'
+    environment:
+      - AUTH_HOST=auth
+      - MONGODB_SERVER=mongo
+    volumes:
+      - ./users/src:/app/src
+    command: npm start
+    links:
+      - auth
+      - mongo
+  auth:
+    build: ./auth
+    expose:
+      - 8082
+    ports:
+      - '8082:8082'
+    environment:
+      - MONGODB_SERVER=mongo
+    volumes:
+      - ./auth/src:/app/src
+    command: npm start
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    expose:
+      - 27017
+    ports:
+      - '27017:27017'

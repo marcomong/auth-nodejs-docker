@@ -9,5 +9,10 @@ module.exports = {
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'shhhhhh'
+  },
+  servers: {
+    auth: {
+      host: process.env.AUTH_HOST || 'localhost'
+    }
   }
 }

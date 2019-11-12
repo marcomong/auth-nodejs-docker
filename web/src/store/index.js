@@ -25,8 +25,8 @@ export default new Vuex.Store({
           commit('setUserInfo', res.data.body)
           router.push({ name: 'home' })
         })
-        .catch((err) => {
-          console.log(err.response.data.message)
+        .catch(() => {
+          // console.log(err.response.data.message)
         })
     },
     signUp ({ commit }, payload) {
@@ -35,8 +35,8 @@ export default new Vuex.Store({
           commit('setUserInfo', res.data.body)
           router.push({ name: 'home' })
         })
-        .catch((err) => {
-          console.log(err.response.data.message)
+        .catch(() => {
+          // console.log(err.response.data.message)
         })
     },
     logout ({ commit }) {

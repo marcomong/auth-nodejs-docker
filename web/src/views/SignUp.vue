@@ -28,7 +28,6 @@ export default {
     ]),
     submitSignUp () {
       if (this.user.password !== this.user.confirmPassword) {
-        console.log('error password match')
         return
       }
       return this.signUp({ username: this.user.username, password: this.user.password })
