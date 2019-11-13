@@ -1,0 +1,16 @@
+.btn {
+  height: 3rem;
+  border: none;
+  width: 100%;
+  background-color: $color-secondary;
+  color: white;
+  font-weight: 400;
+  border-radius: .2rem;
+  outline: none;
+
+  &:hover {
+    background-color: $color-primary;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}

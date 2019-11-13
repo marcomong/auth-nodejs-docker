@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+require('./configurations/db')
 
 const config = require('./configurations/config')
 

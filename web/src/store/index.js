@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from '@/router'
 
-import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
+import auth from './modules/auth'
 
 Vue.use(Vuex)
 
@@ -24,33 +24,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    logIn ({ commit }, payload) {
-      commit('setError', null)
-      return AuthService.logIn(payload)
+    retrieveSecretInfo ({ commit, state }) {
+      return UserService.retrieveSecretInfo({ _id: state.user._id })
         .then((res) => {
-          commit('setUserInfo', res.data.body)
-          router.push({ name: 'home' })
+          console.log(res.data)
         })
         .catch((err) => {
-          commit('setError', err.response.data.message)
+          console.log(err)
         })
-    },
-    signUp ({ commit }, payload) {
-      commit('setError', null)
-      return AuthService.signUp(payload)
-        .then((res) => {
-          commit('setUserInfo', res.data.body)
-          router.push({ name: 'home' })
-        })
-        .catch((err) => {
-          commit('setError', err.response.data.message)
-        })
-    },
-    logout ({ commit }) {
-      commit('setError', null)
-      commit('setUserInfo', null)
     }
   },
   modules: {
+    auth
   }
 })

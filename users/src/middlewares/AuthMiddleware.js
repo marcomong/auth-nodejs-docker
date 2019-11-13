@@ -8,10 +8,14 @@ var authInstance = axios.create({
   headers: {}
 })
 
-function generateToken (req, res) {
-  authInstance.post('/generateToken', req.user)
-    .then((token) => {
-      req.user.token = token.data
+function generateTokens (req, res) {
+  authInstance.post('/generateTokens', req.user)
+    .then((tokens) => {
+      const auth = {
+        userId: req.user._id,
+        ...tokens.data
+      }
+      req.user.auth = auth
       return new Response(res, 200, null, req.user).send()
     })
     .catch((err) => {
@@ -25,14 +29,16 @@ function isTokenValid (req, res, next) {
   })
     .then((result) => {
       req.body.isTokenValid = result.data.body.isTokenValid
-      if(req.data.success)
+      if(result.data.success)
         next()
-      return new Response(res, 500, 'Faild while authorizing user token').send()
+      else {
+        return new Response(res, 500, 'Faild while authorizing user token').send()
+      }
     })
     .catch((err) => {
       return new Response(res, err.response.status, err.message).send()
     })
 }
 
-module.exports.generateToken = generateToken
+module.exports.generateTokens = generateTokens
 module.exports.isTokenValid = isTokenValid

@@ -1,10 +1,38 @@
 const Token = require('../models/Token')
 
-function generateToken (req, res) {
+async function generateTokens (req, res) {
   const { body } = req
   try {
-    const token = Token.generateToken(body.username, body._id)
-    res.status(200).send(token)
+    const token = await Token.generateToken(body._id)
+    const refreshToken = await Token.generateToken(body._id, true)
+
+    const tokens = {
+      token,
+      refreshToken
+    }
+
+    res.status(200).send(tokens)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}
+
+async function grantNewAccessToken (req, res) {
+  const { body } = req
+  const refreshToken = body.refreshToken
+  const _id = body._id
+
+  try {
+    let isValid = await Token.isRefreshTokenValid(_id, refreshToken)
+    if(!isValid) {
+      res.status(401).send({
+        success: false,
+        message: 'Token is not correct for the user',
+      })
+    } else {
+      const token = await Token.generateToken(_id)
+      res.status(200).send({ token })
+    }
   } catch (err) {
     res.status(500).send(err)
   }
@@ -26,19 +54,19 @@ function isTokenValid(req, res) {
   }
 
   try {
-    let decoded = Token.isTokenValid(token)
-    req.body.isValidToken = true
+    let isValid = Token.isTokenValid(body._id, token)
+    req.body.isTokenValid = isValid
 
-    if(body._id != decoded._id) {
-      res.status(401).send({
-        success: false,
-        message: 'Token is not correct for the user',
-      })
-    } else {
+    if(isValid) {
       res.status(200).send({
         success: true,
         message: 'Token is valid',
         body: req.body
+      })
+    } else {
+      res.status(401).send({
+        success: false,
+        message: 'Token is not correct for the user',
       })
     }
   } catch (err) {
@@ -50,4 +78,5 @@ function isTokenValid(req, res) {
 }
 
 module.exports.isTokenValid = isTokenValid
-module.exports.generateToken = generateToken
+module.exports.generateTokens = generateTokens
+module.exports.grantNewAccessToken = grantNewAccessToken
