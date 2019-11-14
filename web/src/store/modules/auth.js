@@ -47,6 +47,14 @@ const actions = {
   logout ({ commit }) {
     commit('setError', null)
     commit('setCookies', { token: null, refreshToken: null, userId: null })
+  },
+  tryAutoSignIn ({ commit }, page) {
+    const token = localStorage.getItem('token')
+    const _id = localStorage.getItem('userId')
+    const refreshToken = localStorage.getItem('refreshToken')
+    if (!token || !_id || !refreshToken) return
+
+    commit('setUserInfo', { _id })
   }
 }
 
