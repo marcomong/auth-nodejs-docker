@@ -2,6 +2,7 @@
   <div class="home">
     <h1>Welcome!</h1>
     <button v-if="isLoggedIn == true" @click="perfromSecretApi()" class="btn">Click me!</button>
+    <h2 v-if="info != null">{{ info }}</h2>
   </div>
 </template>
 
@@ -9,9 +10,12 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapGetters(['isUserLoggedIn']),
+    ...mapGetters(['isUserLoggedIn', 'getSecretInfo']),
     isLoggedIn () {
       return this.isUserLoggedIn
+    },
+    info () {
+      return this.getSecretInfo
     }
   },
   methods: {

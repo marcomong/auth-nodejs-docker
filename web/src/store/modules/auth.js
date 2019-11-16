@@ -12,6 +12,10 @@ const mutations = {
     localStorage.setItem('userId', payload.userId)
   },
   setUserInfo (state, payload) {
+    if (!payload) {
+      state.user = null
+      return
+    }
     delete payload.auth
     state.user = payload
   }
@@ -45,16 +49,38 @@ const actions = {
       })
   },
   logout ({ commit }) {
+    let _id = localStorage.getItem('userId')
+    AuthService.logOut({ _id })
     commit('setError', null)
     commit('setCookies', { token: null, refreshToken: null, userId: null })
+    commit('setUserInfo', null)
+    commit('setSecretInfo', null)
+    router.push({ name: 'logIn' })
   },
   tryAutoSignIn ({ commit }, page) {
     const token = localStorage.getItem('token')
     const _id = localStorage.getItem('userId')
     const refreshToken = localStorage.getItem('refreshToken')
-    if (!token || !_id || !refreshToken) return
 
-    commit('setUserInfo', { _id })
+    if (!token || !_id || !refreshToken) {
+      if (router.currentRoute.name !== 'logIn') {
+        router.push({ name: 'logIn' })
+      }
+      return
+    }
+
+    return AuthService.isTokenValid({ _id })
+      .then((res) => {
+        console.log('everthing ok')
+        commit('setUserInfo', { _id })
+      })
+      .catch((err) => {
+        console.log(err)
+        commit('setCookies', { token: null, refreshToken: null, userId: null })
+        if (router.currentRoute.name !== 'logIn') {
+          router.push({ name: 'logIn' })
+        }
+      })
   }
 }
 

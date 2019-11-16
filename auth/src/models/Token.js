@@ -14,14 +14,10 @@ module.exports.createUserRefreshToken = (userId) => {
     UserToken.findOne({userId})
       .then((user) => {
         if (user) {
-          UserToken.findOneAndUpdate({userId}, {$set:{isRefreshTokenValid: true}}, {new: true}, (err, doc) => {
-            if (err) {
-                console.log("Something wrong when updating data!");
-            } else {
-              console.log(doc);
-              resolve (doc)
-            }
-        });
+          setIsRefreshTokenValid(userId, true)
+            .then ((res) => {
+              resolve(res)
+            })
         } else {
           const newRecord = new UserToken({
             userId,
@@ -32,7 +28,7 @@ module.exports.createUserRefreshToken = (userId) => {
               resolve(newRecord)
             })
         }
-  })
+      })
       .catch((err) => {
         reject(err)
       })
@@ -88,6 +84,22 @@ function isTokenValid (userId, token) {
   return decoded._id == userId
 }
 
+function setIsRefreshTokenValid (userId, isValid) {
+  return new Promise((resolve, reject) => {
+    UserToken.findOneAndUpdate({userId}, {$set:{isRefreshTokenValid: isValid}}, {new: true}, (err, doc) => {
+      if (err) {
+          console.log("Something wrong when updating data!")
+          reject(err)
+      } else {
+        console.log(doc);
+        resolve (doc)
+      }
+    })
+  })
+  
+}
+
 module.exports.generateToken = generateToken
 module.exports.isTokenValid = isTokenValid
 module.exports.isRefreshTokenValid = isRefreshTokenValid
+module.exports.setIsRefreshTokenValid = setIsRefreshTokenValid

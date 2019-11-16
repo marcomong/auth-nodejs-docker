@@ -9,11 +9,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    error: null
+    error: null,
+    secretInfo: null
   },
   getters: {
     isUserLoggedIn: state => state.user != null,
-    getError: state => state.error
+    getError: state => state.error,
+    getSecretInfo: state => state.secretInfo
   },
   mutations: {
     setUserInfo (state, payload) {
@@ -21,13 +23,17 @@ export default new Vuex.Store({
     },
     setError (state, payload) {
       state.error = payload
+    },
+    setSecretInfo (state, payload) {
+      state.secretInfo = payload
     }
   },
   actions: {
     retrieveSecretInfo ({ commit, state }) {
+      commit('setSecretInfo', null)
       return UserService.retrieveSecretInfo({ _id: state.user._id })
         .then((res) => {
-          console.log(res.data)
+          commit('setSecretInfo', res.data.user)
         })
         .catch((err) => {
           console.log(err)

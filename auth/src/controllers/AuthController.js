@@ -77,6 +77,16 @@ function isTokenValid(req, res) {
   }
 }
 
+function logOut(req, res) {
+  const { body } = req
+
+  Token.setIsRefreshTokenValid(body._id, false)
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 module.exports.isTokenValid = isTokenValid
 module.exports.generateTokens = generateTokens
 module.exports.grantNewAccessToken = grantNewAccessToken
+module.exports.logOut = logOut
