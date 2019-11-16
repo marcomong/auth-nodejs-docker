@@ -7,9 +7,9 @@ const getters = {}
 
 const mutations = {
   setCookies (_, payload) {
-    localStorage.setItem('token', payload.token)
-    localStorage.setItem('refreshToken', payload.refreshToken)
-    localStorage.setItem('userId', payload.userId)
+    payload.token != null ? localStorage.setItem('token', payload.token) : localStorage.removeItem('token')
+    payload.refreshToken != null ? localStorage.setItem('refreshToken', payload.refreshToken) : localStorage.removeItem('refreshToken')
+    payload.userId != null ? localStorage.setItem('userId', payload.userId) : localStorage.removeItem('userId')
   },
   setUserInfo (state, payload) {
     if (!payload) {
