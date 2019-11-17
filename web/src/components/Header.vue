@@ -4,7 +4,7 @@
       <img src="@/assets/SVG/home.svg" alt="home" class="home-icon">
      </router-link>
       <nav class="user">
-        <div class="authContainer" v-if="!isLoggedIn">
+        <div class="authContainer" v-if="!isLoggedIn && this.$route.name != 'logIn'">
           <router-link to="/logIn">
             LOGIN
           </router-link>
