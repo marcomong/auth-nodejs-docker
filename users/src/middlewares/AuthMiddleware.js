@@ -36,7 +36,7 @@ function isTokenValid (req, res, next) {
       }
     })
     .catch((err) => {
-      return new Response(res, err.response.status, err.message).send()
+      return new Response(res, err.response.status, err.response.data.message).send()
     })
 }
 

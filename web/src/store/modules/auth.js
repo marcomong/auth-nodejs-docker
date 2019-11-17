@@ -32,7 +32,7 @@ const actions = {
         router.push({ name: 'home' })
       })
       .catch((err) => {
-        commit('setError', err.response.data.message)
+        commit('setError', err)
       })
   },
   signUp ({ commit }, payload) {
@@ -45,7 +45,7 @@ const actions = {
         router.push({ name: 'home' })
       })
       .catch((err) => {
-        commit('setError', err.response.data.message)
+        commit('setError', err)
       })
   },
   logout ({ commit }) {
@@ -74,8 +74,7 @@ const actions = {
         console.log('everthing ok')
         commit('setUserInfo', { _id })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         commit('setCookies', { token: null, refreshToken: null, userId: null })
         if (router.currentRoute.name !== 'logIn') {
           router.push({ name: 'logIn' })

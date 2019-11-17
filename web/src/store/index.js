@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import UserService from '@/services/UserService'
 import auth from './modules/auth'
+import error from './modules/error'
 
 Vue.use(Vuex)
 
@@ -14,15 +15,11 @@ export default new Vuex.Store({
   },
   getters: {
     isUserLoggedIn: state => state.user != null,
-    getError: state => state.error,
     getSecretInfo: state => state.secretInfo
   },
   mutations: {
     setUserInfo (state, payload) {
       state.user = payload
-    },
-    setError (state, error) {
-      state.error = error
     },
     setSecretInfo (state, payload) {
       state.secretInfo = payload
@@ -36,11 +33,12 @@ export default new Vuex.Store({
           commit('setSecretInfo', res.data.user)
         })
         .catch((err) => {
-          console.log(err)
+          commit('setError', err)
         })
     }
   },
   modules: {
-    auth
+    auth,
+    error
   }
 })

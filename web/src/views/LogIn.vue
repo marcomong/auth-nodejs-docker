@@ -22,9 +22,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getError']),
+    ...mapGetters(['getErrorMessage']),
     error () {
-      return this.getError
+      return this.getErrorMessage
     }
   },
   methods: {

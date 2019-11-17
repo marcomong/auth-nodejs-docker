@@ -27,7 +27,7 @@ async function grantNewAccessToken (req, res) {
     if(!isValid) {
       res.status(401).send({
         success: false,
-        message: 'Token is not correct for the user',
+        message: 'Unauthorized',
       })
     } else {
       const token = await Token.generateToken(_id)
@@ -49,7 +49,7 @@ function isTokenValid(req, res) {
   if (!token) {
     res.status(401).send({
       success: false,
-      message: err.message
+      message: 'Unauthorized'
     })
   }
 
@@ -72,7 +72,7 @@ function isTokenValid(req, res) {
   } catch (err) {
     res.status(401).send({
       success: false,
-      message: err.message,
+      message: 'Unauthorized',
     })
   }
 }
