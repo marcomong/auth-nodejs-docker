@@ -70,14 +70,11 @@ const actions = {
     }
 
     return AuthService.isTokenValid({ _id })
-      .then((res) => {
+      .then(() => {
         commit('setUserInfo', { _id })
       })
       .catch(() => {
         commit('setCookies', { token: null, refreshToken: null, userId: null })
-        if (router.currentRoute.name !== 'logIn') {
-          router.push({ name: 'logIn' })
-        }
       })
   }
 }
