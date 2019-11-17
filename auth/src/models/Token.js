@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('../configurations/config')
 const mongoose = require('mongoose')
+const log = require('../configurations/logger')
 
 const UserTokenSchema = new mongoose.Schema({
   userId: mongoose.Types.ObjectId,
@@ -44,7 +45,7 @@ function generateToken (_id, isRefreshToken = false) {
         }, config.jwt.refresh_token)
       })
       .catch((err) => {
-        console.log(err)
+        log.error('%o', err)
         let emptyToken = ''
         return emptyToken
       })
@@ -72,7 +73,7 @@ function isRefreshTokenValid (userId, token) {
       }
     })
     .catch((err) => {
-      console.log(err)
+      log.error('%o', err)
       return false
     })
 }
@@ -88,10 +89,10 @@ function setIsRefreshTokenValid (userId, isValid) {
   return new Promise((resolve, reject) => {
     UserToken.findOneAndUpdate({userId}, {$set:{isRefreshTokenValid: isValid}}, {new: true}, (err, doc) => {
       if (err) {
-          console.log("Something wrong when updating data!")
+        log.error('Error when updating the data, %o', err)
           reject(err)
       } else {
-        console.log(doc);
+        log.info(doc)
         resolve (doc)
       }
     })

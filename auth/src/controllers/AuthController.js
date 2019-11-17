@@ -1,4 +1,5 @@
 const Token = require('../models/Token')
+const log = require('../configurations/logger')
 
 async function generateTokens (req, res) {
   const { body } = req
@@ -82,7 +83,7 @@ function logOut(req, res) {
 
   Token.setIsRefreshTokenValid(body._id, false)
     .catch((err) => {
-      console.log(err)
+      log.error('%o', err)
     })
 }
 
