@@ -5,20 +5,25 @@ export const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost/api/' : 'http://localhost:8081/'
 })
 
-instance.defaults.headers.common['authorization'] = getAccessToken()
+instance.interceptors.request.use(function (config) {
+  config.headers.Authorization = getAccessToken()
+  return config
+})
 
 export const authInstance = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost/authApi/' : 'http://localhost:8082/'
 })
 
-authInstance.defaults.headers.common['authorization'] = getAccessToken()
+authInstance.interceptors.request.use(function (config) {
+  config.headers.Authorization = getAccessToken()
+  return config
+})
 
 const refreshAuthLogic = failedRequest => authInstance.post('/auth/grantNewAccessToken', getRefreshTokenInfo())
   .then(tokenRefresh => {
     const newToken = tokenRefresh.data.token
     localStorage.setItem('token', newToken)
 
-    failedRequest.response.config.headers['authorization'] = getAccessToken()
     return Promise.resolve()
   })
 

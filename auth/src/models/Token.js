@@ -53,7 +53,7 @@ function generateToken (_id, isRefreshToken = false) {
     _id: _id
   }, config.jwt.token_secret,
   {
-    expiresIn: '10s'
+    expiresIn: '5s'
   })
 }
 

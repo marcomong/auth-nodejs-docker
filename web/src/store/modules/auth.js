@@ -71,7 +71,6 @@ const actions = {
 
     return AuthService.isTokenValid({ _id })
       .then((res) => {
-        console.log('everthing ok')
         commit('setUserInfo', { _id })
       })
       .catch(() => {
