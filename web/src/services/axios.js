@@ -34,5 +34,5 @@ function getAccessToken () {
   return token
 }
 
-// createAuthRefreshInterceptor(instance, refreshAuthLogic)
+createAuthRefreshInterceptor(instance, refreshAuthLogic)
 createAuthRefreshInterceptor(authInstance, refreshAuthLogic)

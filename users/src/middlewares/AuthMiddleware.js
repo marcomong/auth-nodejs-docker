@@ -4,7 +4,7 @@ const Response = require('../models/Response')
 
 var authInstance = axios.create({
   baseURL: `http://${config.servers.auth.host}:8082/auth/`,
-  timeout: 10000000,
+  timeout: 30000,
   headers: {}
 })
 
