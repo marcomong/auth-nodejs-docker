@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const log = require('./configurations/logger')
 
 require('./configurations/db')
 
@@ -30,4 +31,6 @@ app.use('/user', UserInfoRoutes)
 
 app.listen(app.get('port'), () => {
   console.log(`listening on port ${port}`)
+  throw new Error('test1')
+  log.error('sending2 \n %o', {a: 'test'})
 })

@@ -21,8 +21,8 @@ export default new Vuex.Store({
     setUserInfo (state, payload) {
       state.user = payload
     },
-    setError (state, payload) {
-      state.error = payload
+    setError (state, error) {
+      state.error = error
     },
     setSecretInfo (state, payload) {
       state.secretInfo = payload
