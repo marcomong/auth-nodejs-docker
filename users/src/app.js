@@ -30,7 +30,5 @@ app.use('/auth', AuthRoutes)
 app.use('/user', UserInfoRoutes)
 
 app.listen(app.get('port'), () => {
-  console.log(`listening on port ${port}`)
-  throw new Error('test1')
-  log.error('sending2 \n %o', {a: 'test'})
+  log.info(`listening on port ${port}`)
 })

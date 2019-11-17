@@ -1,9 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const log = require('./configurations/logger')
 require('./configurations/db')
 
 const config = require('./configurations/config')
+const port = config.app.port
 
 let AuthRoutes = require('./routes/AuthRoutes')
 
@@ -23,5 +25,5 @@ app.set('port', config.app.port)
 app.use('/auth', AuthRoutes)
 
 app.listen(app.get('port'), function () {
-  console.log(`listening on port ${config.app.port}`)
+  log.info(`listening on port ${port}`)
 })
