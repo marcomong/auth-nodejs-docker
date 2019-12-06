@@ -10,5 +10,8 @@ module.exports = {
   jwt: {
     token_secret: process.env.JWT_TOKEN_SECRET || 'shhhhhh',
     refresh_token: process.env.JWT_REFRESH_SECRET || 'shhhhhrefresh'
+  },
+  hash: {
+    salt: process.env.HASH_SALT || 'secretSouce'
   }
 }

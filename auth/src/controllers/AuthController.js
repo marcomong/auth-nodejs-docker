@@ -1,11 +1,45 @@
-const Token = require('../models/Token')
+const UserAuth = require('../models/UserAuth')
 const log = require('../configurations/logger')
+const Response = require('../models/Response')
 
-async function generateTokens (req, res) {
+
+function signUp(req, res, next) {
+  const { body } = req
+
+  UserAuth.signUp(body.username, body.password)
+    .then((result) => {
+      if(result.success) {
+        return new Response(res, 200, result.body).send()
+      } else {
+        return new Response(res, 500, result.message).send()
+      }
+    })
+    .catch((err) => {
+      return new Response(res, 500, err.message).send()
+    })
+}
+
+function logIn(req, res, next) {
+  const { body } = req
+
+  UserAuth.logIn(body.username, body.password)
+    .then((result) => {
+      if(result.success) {
+        return new Response(res, 200, result.body).send()
+      } else {
+        return new Response(res, 500, result.message).send()
+      }
+    })
+    .catch((err) => {
+      return new Response(res, 500, err.message).send()
+    })
+}
+
+async function generateTokens(req, res) {
   const { body } = req
   try {
-    const token = await Token.generateToken(body._id)
-    const refreshToken = await Token.generateToken(body._id, true)
+    const token = await UserAuth.generateToken(body._id)
+    const refreshToken = await UserAuth.generateToken(body._id, true)
 
     const tokens = {
       token,
@@ -18,14 +52,14 @@ async function generateTokens (req, res) {
   }
 }
 
-async function grantNewAccessToken (req, res) {
+async function grantNewAccessToken(req, res) {
   const { body } = req
   const refreshToken = body.refreshToken
   const _id = body._id
 
   try {
     let isValid = await Token.isRefreshTokenValid(_id, refreshToken)
-    if(!isValid) {
+    if (!isValid) {
       res.status(401).send({
         success: false,
         message: 'Unauthorized',
@@ -55,10 +89,10 @@ function isTokenValid(req, res) {
   }
 
   try {
-    let isValid = Token.isTokenValid(body._id, token)
+    let isValid = UserAuth.isTokenValid(body._id, token)
     req.body.isTokenValid = isValid
 
-    if(isValid) {
+    if (isValid) {
       res.status(200).send({
         success: true,
         message: 'Token is valid',
@@ -81,7 +115,7 @@ function isTokenValid(req, res) {
 function logOut(req, res) {
   const { body } = req
 
-  Token.setIsRefreshTokenValid(body._id, false)
+  UserAuth.setIsRefreshTokenValid(body._id, false)
     .catch((err) => {
       log.error('%o', err)
     })
@@ -91,3 +125,5 @@ module.exports.isTokenValid = isTokenValid
 module.exports.generateTokens = generateTokens
 module.exports.grantNewAccessToken = grantNewAccessToken
 module.exports.logOut = logOut
+module.exports.logIn = logIn
+module.exports.signUp = signUp

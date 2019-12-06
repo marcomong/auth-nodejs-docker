@@ -7,9 +7,6 @@ module.exports = {
   app: {
     port: process.env.PORT || 8081
   },
-  jwt: {
-    secret: process.env.JWT_SECRET || 'shhhhhh'
-  },
   servers: {
     auth: {
       host: process.env.AUTH_HOST || 'localhost'

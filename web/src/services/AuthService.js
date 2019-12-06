@@ -1,11 +1,11 @@
-import { instance as axios, authInstance } from './axios'
+import { authInstance } from './axios'
 
 function logIn (payload) {
-  return axios.post('/auth/logIn', payload)
+  return authInstance.post('/auth/logIn', payload)
 }
 
 function signUp (payload) {
-  return axios.post('/auth/signUp', payload)
+  return authInstance.post('/auth/signUp', payload)
 }
 
 function logOut (payload) {
